@@ -1,0 +1,3 @@
+gitlab_backups/
+.env
+srv/

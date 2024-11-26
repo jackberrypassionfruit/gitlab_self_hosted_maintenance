@@ -1,0 +1,24 @@
+Add PLY-FP-11/IT folder via GUI file manager at boot:
+/run/user/1000/gvfs/smb-share:server=10.6.0.26,share=it/polygit_backups
+
+
+As SUDO:
+backup_folder=$(date '+%Y-%m-%d_%I%p') ### ex. 2024-11-26_02PM
+working_dir=/home/plyadmin/repos/gitlab_self_hosted/
+mkdir $working_dir/$backup_folder
+
+docker exec -it gitlab gitlab-backup create
+mv $working_dir/srv/gitlab/data/backups/* $working_dir/$backup_folder
+
+chown -R plyadmin $working_dir/$backup_folder/*.tar
+
+As plyadmin:
+backup_folder=$(date '+%Y-%m-%d_%I%p') ### ex. 2024-11-26_02PM
+working_dir=/home/plyadmin/repos/gitlab_self_hosted/
+cp $working_dir/srv/gitlab/config/gitlab-secrets.json $working_dir/$backup_folder/
+
+new_folder=/run/user/1000/gvfs/smb-share:server=10.6.0.26,share=it/polygit_backups/$backup_folder/
+mkdir $new_folder
+
+cp $working_dir/$backup_folder/* $new_folder
+mv $working_dir/$backup_folder $working_dir/gitlab_backups

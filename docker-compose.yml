@@ -1,0 +1,21 @@
+version: '3.6'
+services:
+  gitlab:
+    image: gitlab/gitlab-ee:16.8.1-ee.0
+    container_name: gitlab
+    restart: always
+    hostname: 'ply-linux-12'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # Add any other gitlab.rb configuration here, each on its own line
+        external_url 'https://ply-linux-12:8929'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+    ports:
+      - '443:443'
+      - '2224:22'
+      - '8929:8929'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'
