@@ -1,6 +1,6 @@
 Add PLY-FP-11/IT folder via GUI file manager at boot:
 /run/user/1000/gvfs/smb-share:server=10.6.0.26,share=it/polygit_backups
-
+#### This is no longer working. Permissions?
 
 As SUDO:
 backup_folder=$(date '+%Y-%m-%d_%I%p') ### ex. 2024-11-26_02PM
